@@ -247,7 +247,7 @@ private fun BoxScope.AnimationCircleCanvas(durationMills: Int) {
             drawArc(
                 color = color,
                 startAngle = animatedRestart,
-                sweepAngle = 360f,
+                sweepAngle = 150f,
                 topLeft = topLeftOffset,
                 size = size,
                 useCenter = false,
