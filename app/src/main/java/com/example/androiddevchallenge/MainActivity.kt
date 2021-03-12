@@ -18,10 +18,14 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.Crossfade
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
@@ -35,12 +39,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
+enum class Screen {
+    Input, Countdown
+}
 // Start building your app here!
 @Composable
 fun MyApp() {
+    var timeInSec = 0
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        var screen by remember { mutableStateOf(Screen.Input) }
+        Crossfade(targetState = screen) {
+            when (screen) {
+                Screen.Input -> InputScreen2 {
+                    timeInSec = it
+                    screen = Screen.Countdown
+                }
+                Screen.Countdown -> CountDownScreen(timeInSec) {
+                    screen = Screen.Input
+                }
+            }
+        }
     }
 }
 
